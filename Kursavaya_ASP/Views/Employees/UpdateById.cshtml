@@ -1,0 +1,61 @@
+﻿@model Kursavaya_ASP.Models.Tables.Main.Employee
+
+<div class="text-center w-25 mx-auto">
+    <h3>@ViewBag.Header</h3>
+
+    <form class="bg-light p-5" method="post" enctype="multipart/form-data"
+          asp-controller="Employees" asp-action="Update">
+
+        @* идентификатор пользователя, не меняем, но используем *@
+        <input asp-for="Id" type="hidden" value="@Model.Id" />
+
+
+        <div class="mt-2">
+            <label asp-for="FirstName" class="form-label" style="font-size: 14pt">Имя</label>
+            <input asp-for="FirstName" type="text" class="form-control" />
+        </div>
+
+        <div class="mt-2">
+            <label asp-for="Surname" class="form-label" style="font-size: 14pt">Фамилия</label>
+            <input asp-for="Surname" type="text" class="form-control" />
+        </div>
+
+        <div class="mt-2">
+            <label asp-for="Patronymic" class="form-label" style="font-size: 14pt">Отчество</label>
+            <input asp-for="Patronymic" type="text" class="form-control" />
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label" asp-for="IdPosition">Должность</label>
+            <select class="form-select" asp-for="IdPosition" asp-items="@ViewBag.Positions"></select>
+        </div>
+
+        <div class="mb-3 @(ViewBag.CurUser == "Офицер" ? "d-none" : "")">
+            <label class="form-label" asp-for="IdDepartment">Отделение ГСС</label>
+            <select class="form-select" asp-for="IdDepartment" asp-items="@ViewBag.Departments"></select>
+        </div>
+
+        <div class="mt-2">
+            <label asp-for="Salary" class="form-label" style="font-size: 14pt">Оклад</label>
+            <input asp-for="Salary" type="number" class="form-control" min="1000" max="1000000"/>
+        </div>
+
+        <div class="mt-2">
+            <label asp-for="YearStart" class="form-label" style="font-size: 14pt">Год начала работы</label>
+            <input asp-for="YearStart" type="number" class="form-control" min="1983" max="@(DateTime.Now.Year)"/>
+        </div>
+
+        <div class="mt-2">
+            <label asp-for="Birthday" class="form-label" style="font-size: 14pt">Дата рождения</label>
+            <input asp-for="Birthday" type="date" class="form-control" min="1965-01-01" max="@ViewBag.MaxDate" />
+        </div>
+
+        <div class="mt-2">
+            <button type="submit" class="btn btn-primary">Сохранить</button>
+            <a class="btn btn-secondary" asp-controller="Employees" asp-action="Index">Отмена</a>
+        </div>
+    </form>
+
+    <p class="text-danger">@ViewBag.ErrMessage</p>
+</div>
+

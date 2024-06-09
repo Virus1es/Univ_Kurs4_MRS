@@ -1,0 +1,28 @@
+﻿@model Kursavaya_ASP.Models.Dto.ForUpdeteRef
+
+<div class="text-center w-25 mx-auto">
+    <h3>@ViewBag.Header</h3>
+
+    <form class="bg-light p-5" method="post" enctype="multipart/form-data"
+          asp-controller="References" asp-action="Update">
+
+        @* идентификатор пользователя, не меняем, но используем *@
+        <input asp-for="Id" type="hidden" value="@Model.Id" />
+
+        @* имя таблицы редактирования, не меняем, но используем *@
+        <input asp-for="Table" type="hidden" value="@Model.Table" />
+
+        <div class="mt-2">
+            <label asp-for="Column" class="form-label" style="font-size: 14pt">@ViewBag.ColName</label>
+            <input asp-for="Column" type="text" class="form-control" />
+        </div>
+
+        <div class="mt-2">
+            <button type="submit" class="btn btn-primary">Сохранить</button>
+            <a class="btn btn-secondary" asp-controller="References" asp-action="@Model.Table">Отмена</a>
+        </div>
+    </form>
+
+    <p class="text-danger">@ViewBag.ErrMessage</p>
+</div>
+

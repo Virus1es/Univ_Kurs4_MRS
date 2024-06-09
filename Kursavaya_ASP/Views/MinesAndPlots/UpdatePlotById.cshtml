@@ -1,0 +1,52 @@
+﻿@model Kursavaya_ASP.Models.Tables.Main.Plot
+
+<div class="text-center w-25 mx-auto">
+    <h3>@ViewBag.Header</h3>
+
+    <form class="bg-light p-5" method="post" enctype="multipart/form-data"
+          asp-controller="MinesAndPlots" asp-action="UpdatePlot">
+
+        @* идентификатор пользователя, не меняем, но используем *@
+        <input asp-for="Id" type="hidden" value="@Model.Id" />
+
+
+        <div class="mt-2">
+            <label asp-for="Number" class="form-label" style="font-size: 14pt">Численно-буквенный код участка</label>
+            <input asp-for="Number" type="text" class="form-control" />
+        </div>
+
+        <div class="mt-2">
+            <label asp-for="LengthPlot" class="form-label" style="font-size: 14pt">Длина учатска</label>
+            <input asp-for="LengthPlot" type="number" class="form-control" min="100" />
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label" asp-for="IdCoalType">Тип добываемого угля</label>
+            <select class="form-select" asp-for="IdCoalType" asp-items="@ViewBag.Coals"></select>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label" asp-for="IdProductionType">Тип выработки</label>
+            <select class="form-select" asp-for="IdProductionType" asp-items="@ViewBag.Productions"></select>
+        </div>
+
+        <div class="mt-2">
+            <label asp-for="YearStart" class="form-label" style="font-size: 14pt">Год начала работы</label>
+            <input asp-for="YearStart" type="number" class="form-control" min="1960" max="@(DateTime.Now.Year)"/>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label" asp-for="IdMine">Шахта, в которой находится участкок</label>
+            <select class="form-select" asp-for="IdMine" asp-items="@ViewBag.Mines"></select>
+        </div>
+
+
+        <div class="mt-2">
+            <button type="submit" class="btn btn-primary">Сохранить</button>
+            <a class="btn btn-secondary" asp-controller="Employees" asp-action="Index">Отмена</a>
+        </div>
+    </form>
+
+    <p class="text-danger">@ViewBag.ErrMessage</p>
+</div>
+

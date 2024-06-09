@@ -1,0 +1,61 @@
+﻿@model IEnumerable<Kursavaya_ASP.Models.Tables.Main.Employee>
+@{
+    ViewBag.Title = ViewBag.Header = "Коллетив";
+}
+
+<h4 class="text-center">@ViewBag.Header</h4>
+<h5 class="text-center mb-3">Всего нас: @ViewBag.EmplAmount</h5>
+
+
+@* Вывод коллекции сведений о работниках *@
+<table id="table" class="table table-bordered table-hover w-100 mx-auto">
+    <thead>
+        <tr class="bg-light text-black align-middle">
+            <th>Фамилия</th>
+            <th>Имя</th>
+            <th>Отчество</th>
+            <th>Оклад, руб.</th>
+            <th>Год начала работы в отделении</th>
+            <th>Дата рождения</th>
+            <th>Занимаемая должность</th>
+            <th>Отделение</th>
+            <th class="text-center @(ViewBag.CurUser == "Рабочий" ? "d-none" : "")">
+                <a class="btn btn-outline-success ms-2"
+                   asp-controller="Employees"
+                   asp-action="AddEmployee"
+                   title="Добавить...">
+                    <i class="bi bi-plus-square"></i>
+                </a>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var employee in Model)
+        {
+            <tr class="align-middle">
+                <td>@employee.Surname</td>
+                <td>@employee.FirstName</td>
+                <td>@employee.Patronymic</td>
+                <td class="px-5">@($"{employee.Salary:n2}")</td>
+                <td class="px-5">@employee.YearStart</td>
+                <td class="px-5">@($"{employee.Birthday:dd.MM.yyyy}")</td>
+                <td class="px-5">@employee.Position.PositionName</td>
+                <td class="px-5">@employee.Department.DepName</td>
+                <td class="text-center @(ViewBag.CurUser == "Рабочий" ? "d-none" : "")">
+                    <a class="btn btn-outline-primary ms-2"
+                       asp-controller="Employees"
+                       asp-action="UpdateById"
+                       asp-route-id="@employee.Id" title="Изменить...">
+                        <i class="bi bi-pencil-square"></i>
+                    </a>
+                    <a class="btn btn-outline-danger ms-2"
+                       asp-controller="Employees"
+                       asp-action="DeleteById"
+                       asp-route-id="@employee.Id" title="Уволить...">
+                        <i class="bi bi-trash3"></i>
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

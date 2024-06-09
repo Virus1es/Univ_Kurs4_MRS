@@ -1,0 +1,45 @@
+﻿@model Kursavaya_ASP.Models.Dto.UserRegister
+@{
+    ViewBag.Title = "Регистрация";
+    ViewBag.Header = "Регистрация аккаунта";
+}
+
+<div class="text-center w-25 mx-auto">
+    <h2>Регистрация</h2>
+
+    <form class="bg-light p-5" method="post"
+          asp-controller="Users" asp-action="TryRegisterNewUser">
+
+        @* идентификатор пользователя, не меняем, но используем *@
+        <input asp-for="Id" type="hidden" value="@Model.Id"/>
+
+
+        <div class="mt-2">
+            <label asp-for="Login" class="form-label" style="font-size: 14pt">Логин</label>
+            <input asp-for="Login" type="text" class="form-control" />
+        </div>
+
+        <div class="mt-2">
+            <label asp-for="Password" class="form-label" style="font-size: 14pt">Пароль</label>
+            <input asp-for="Password" type="password" class="form-control" />
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label" asp-for="IdDepartment">Отделение ГСС</label>
+            <select class="form-select" asp-for="IdDepartment" asp-items="@ViewBag.Departments"></select>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label" asp-for="RoleName">Уровень доступа</label>
+            <select class="form-select" asp-for="RoleName" asp-items="@ViewBag.Roles"></select>
+        </div>
+
+        <div class="mt-2">
+            <button type="submit" class="btn btn-primary">Сохранить</button>
+            <a class="btn btn-secondary" asp-controller="Users" asp-action="Index">Отмена</a>
+        </div>
+    </form>
+
+    <p class="text-danger">@ViewBag.ErrMessage</p>
+</div>
+

@@ -1,0 +1,169 @@
+﻿@{
+    ViewBag.Title = ViewBag.Header = "2 часть отчётов";
+}
+
+
+<h3 class="m-3 text-center">@ViewBag.Title</h3>
+
+@* Вывод коллекции сведений о запросе 1 *@
+<h4 class="mt-4 text-center">Количество чрезвычайных ситуаций по типам</h4>
+<table class="table table-bordered table-hover w-50 mx-auto">
+    <thead>
+        <tr class="bg-light text-black align-middle">
+            <th>Тип проишествия</th>
+            <th>Количество проишествий</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in ViewBag.WithoutCond)
+        {
+            <tr class="align-middle">
+                <td>@item.TypeName</td>
+                <td>@item.Amount</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<div class="m-4" style="max-width:400px">
+    <canvas id="myChart" style="max-width:400px"></canvas>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+    @ViewBag.Chart
+    const ctx = document.getElementById('myChart');
+    const data = {
+        labels: ["Взрыв газа", "Выбросы угля", "Загазирование", "Затопление", "Обвал лавы", "Пожар"],
+        datasets: [{
+            label: 'Количество чрезвычайных ситуаций по типам',
+            data: [26, 18, 22, 15, 16 , 8],
+            backgroundColor: [
+                'rgb(255, 99, 132)',
+                'rgb(54, 162, 235)',
+                'rgb(255, 205, 86)', 
+                'rgb(173, 255, 47)',
+                'rgb(32, 178, 170)',
+                'rgb(175, 238, 238)',
+            ],
+            hoverOffset: 4
+        }]
+    };
+    const config = {
+        type: 'pie',
+        data: data,
+    };
+    new Chart(ctx, config);
+</script> 
+
+
+@* Вывод коллекции сведений о запросе 2 *@
+<h4 class="mt-4 text-center">Количество ЧС по датам с ущербом на сумму больше 300 000</h4>
+<table class="table table-bordered table-hover w-50 mx-auto">
+    <thead>
+        <tr class="bg-light text-black align-middle">
+            <th>Дата проишествия</th>
+            <th>Количество проишествия</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in ViewBag.WithCondData)
+        {
+            <tr class="align-middle">
+                <td>@($"{item.IncDate:dd.MM.yyyy}")</td>
+                <td>@item.Amount</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+
+@* Вывод коллекции сведений о запросе 3 *@
+<h4 class="mt-4 text-center">Участки с суммарным ущербом за всё время больше 300 000</h4>
+<table class="table table-bordered table-hover w-75 mx-auto">
+    <thead>
+        <tr class="bg-light text-black align-middle">
+            <th>Шахта участка</th>
+            <th>Код участка</th>
+            <th>Суммарный ущерб, руб</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in ViewBag.WithCondGroup)
+        {
+            <tr class="align-middle">
+                <td>@item.MineName</td>
+                <td>@item.Number</td>
+                <td>@($"{item.SumDamage:n2}")</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+
+@* Вывод коллекции сведений о запросе 4 *@
+<h4 class="mt-4 text-center">Участки, где суммарный ущерб больше 300 000 за 2022 год</h4>
+<table class="table table-bordered table-hover w-75 mx-auto">
+    <thead>
+        <tr class="bg-light text-black align-middle">
+            <th>Шахта участка</th>
+            <th>Код участка</th>
+            <th>Суммарный ущерб, руб</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in ViewBag.WithCondDataAndGroup)
+        {
+            <tr class="align-middle">
+                <td>@item.MineName</td>
+                <td>@item.Number</td>
+                <td>@($"{item.SumDamage:n2}")</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+
+@* Вывод коллекции сведений о запросе 5 *@
+<h4 class="mt-4 text-center">Количетсво ЧС с минимальным ущербом для каждой шахты</h4>
+<table class="table table-bordered table-hover w-50 mx-auto">
+    <thead>
+        <tr class="bg-light text-black align-middle">
+            <th>Название шахты</th>
+            <th>Количество проишествий</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in ViewBag.QueryOnQuery)
+        {
+            <tr class="align-middle">
+                <td>@item.MineName</td>
+                <td>@item.IncidentsCount</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+
+@* Вывод коллекции сведений о запросе 6 *@
+<h4 class="mt-4 text-center">Шахты находящиеся в Донецке</h4>
+<table class="table table-bordered table-hover w-25 mx-auto">
+    <thead>
+        <tr class="bg-light text-black align-middle">
+            <th>Название шахты</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in ViewBag.WithSubQuery)
+        {
+            <tr class="align-middle">
+                <td>@item</td>
+            </tr>
+        }
+    </tbody>
+</table>

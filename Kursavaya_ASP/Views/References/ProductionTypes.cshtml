@@ -1,0 +1,49 @@
+﻿@{
+    ViewBag.Title = ViewBag.Header = "Список типов выроботки";
+}
+
+<h4 class="text-center">@ViewBag.Header</h4>
+
+
+@* Вывод коллекции сведений о типах выроботки *@
+<table id="table" class="table table-bordered table-hover w-75 mx-auto">
+    <thead>
+        <tr class="bg-light text-black align-middle">
+            <th class="text-end">Ид</th>
+            <th>Тип выроботки</th>
+            <th class="text-center">
+                <a class="btn btn-outline-success ms-2"
+                   asp-controller="References"
+                   asp-action="AddProductionType"
+                   title="Добавить...">
+                    <i class="bi bi-plus-square"></i>
+                </a>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var type in Model)
+        {
+            <tr class="align-middle">
+                <td class="text-end">@type.Id</td>
+                <td class="px-5">@type.TypeName</td>
+                <td class="text-center">
+                    <a class="btn btn-outline-primary ms-2"
+                       asp-controller="References"
+                       asp-action="UpdateProductionTypeById"
+                       asp-route-id="@type.Id" title="Изменить...">
+                        <i class="bi bi-pencil-square"></i>
+                    </a>
+                    <a class="btn btn-outline-danger ms-2"
+                       asp-controller="References"
+                       asp-action="DeleteProductionTypeById"
+                       asp-route-id="@type.Id" title="Изменить...">
+                        <i class="bi bi-trash3"></i>
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+

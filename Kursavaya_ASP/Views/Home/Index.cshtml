@@ -1,0 +1,62 @@
+﻿@{
+    ViewBag.Title = "Главная страница";
+    ViewBag.Header = "Приветственная страница";
+}
+
+@if(ViewBag.CurUser != "Администратор") {
+    <h2 class="text-primary text-center mt-3 mb-5">сайт Отдела ГСС '@ViewBag.DepName'</h2>
+}
+
+<div id="carousel-gss" class="carousel slide w-100" data-bs-ride="carousel">
+    <div class="carousel-indicators">
+        <button type="button" data-bs-target="#carousel-gss" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Рабочие"></button>
+        <button type="button" data-bs-target="#carousel-gss" data-bs-slide-to="1" aria-label="Командиры"></button>
+        <button type="button" data-bs-target="#carousel-gss" data-bs-slide-to="2" aria-label="Администраторы"></button>
+    </div>
+
+    <div class="carousel-inner">
+        <div class="carousel-item active">
+            <a href="#"><img src="~/img/home/gss_employee.jpg" alt="Рабочие ГСС" width="100%" height="700px" /></a>
+            <div class="carousel-caption d-none d-md-block bg-secondary">
+                <h3>Рабочие ГСС</h3>
+                <p>
+                    <b>Рабочие</b> ГСС это смелые и отважные люди, которые готовы прийти на помощь в беде любому. Поэтому их труд
+                    должен по достоинству оплачиваться именно поэтому на этом сайте <b>Рабочие</b> могут отслеживать
+                    сведенья о своём участии в устранении черезвычайных ситуаций, чтобы по случайности не упустить что-либо.
+                </p>
+            </div>
+        </div>
+        <div class="carousel-item">
+            <a href="#"><img src="~/img/home/gss_comand.jpg" alt="Командиры ГСС" width="100%" height="700px" /></a>
+            <div class="carousel-caption d-none d-md-block bg-secondary">
+                <h3>Командиры ГСС</h3>
+                <p>
+                    <b>Командиры</b> горно-спасательных служб это собранные, дисциплинированные и, безусловно, отважные люди. На данном
+                    сайте они будут вести базу своих рабочих: добавлять новых, изменять о них данные или удалять их из базы в
+                    связи с увольнением. Помимо всего этого командир способен посмотреть список шахт и участков на них, к
+                    которым прекреплёно его отделение.
+                </p>
+            </div>
+        </div>
+        <div class="carousel-item">
+            <a href="#"><img src="~/img/home/gss_admin.jpg" alt="Администраторы" width="100%" height="700px"/></a>
+            <div class="carousel-caption d-none d-md-block bg-secondary">
+                <h3>Администраторы</h3>
+                <p>
+                    <b>Администраторы.</b> В современном мире без них не обходится не одна база данных, они - последняя инстанция, обладающая
+                    всеми возможностями на сайте. Данный сайт не стал исключением, здесь администратор способен изменять и просматривать
+                    всю базу данных своего отделения.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <button class="carousel-control-prev" type="button" data-bs-target="#carousel-gss" data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carousel-gss" data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+    </button>
+</div>

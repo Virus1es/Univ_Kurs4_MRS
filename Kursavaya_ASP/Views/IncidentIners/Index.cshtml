@@ -1,0 +1,56 @@
+﻿@model IEnumerable<Kursavaya_ASP.Models.Tables.Main.IncidentIner>
+@{
+    ViewBag.Title = ViewBag.Header = "Журнал участия в устранениях ЧС";
+}
+
+<h4 class="text-center">@ViewBag.Header</h4>
+
+
+@* Вывод коллекции сведений о участиях в ликвидациях ЧС *@
+<table id="table" class="table table-bordered table-hover w-100 mx-auto">
+    <thead>
+        <tr class="bg-light text-black align-middle">
+            <th>ФИО участника ликвидации</th>
+            <th>Дата проишествия</th>
+            <th>Тип проишествия</th>
+            <th>Шахта, где произошло ЧС</th>
+            <th>Участок, где произошло ЧС</th>
+            <th>Количество дней работы</th>
+            <th class="text-center @(ViewBag.CurUser == "Рабочий" ? "d-none" : "")">
+                <a class="btn btn-outline-success ms-2"
+                   asp-controller="IncidentIners"
+                   asp-action="AddIncidentIner"
+                   title="Добавить...">
+                    <i class="bi bi-plus-square"></i>
+                </a>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var iner in Model)
+        {
+            <tr class="align-middle">
+                <td>@($"{iner.Employee.Surname} {iner.Employee.FirstName[0]}.{iner.Employee.Patronymic[0]}.")</td>
+                <td>@($"{iner.Incident.IncDate:d}")</td>
+                <td>@iner.Incident.EmergencyType.TypeName</td>
+                <td>@iner.Incident.Plot.Mine.MineName</td>
+                <td>@iner.Incident.Plot.Number</td>
+                <td class="px-5">@iner.DaysAmount</td>
+                <td class="text-center @(ViewBag.CurUser == "Рабочий" ? "d-none" : "")">
+                    <a class="btn btn-outline-primary ms-2"
+                       asp-controller="IncidentIners"
+                       asp-action="UpdateById"
+                       asp-route-id="@iner.Id" title="Изменить...">
+                        <i class="bi bi-pencil-square"></i>
+                    </a>
+                    <a class="btn btn-outline-danger ms-2"
+                       asp-controller="IncidentIners"
+                       asp-action="DeleteById"
+                       asp-route-id="@iner.Id" title="Удалить...">
+                        <i class="bi bi-trash3"></i>
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

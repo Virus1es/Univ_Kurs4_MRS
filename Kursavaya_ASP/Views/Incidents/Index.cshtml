@@ -1,0 +1,56 @@
+﻿@model IEnumerable<Kursavaya_ASP.Models.Tables.Main.Incident>
+@{
+    ViewBag.Title = ViewBag.Header = "Журнал ЧС";
+}
+
+<h4 class="text-center">@ViewBag.Header</h4>
+
+
+@* Вывод коллекции сведений о работниках *@
+<table id="table" class="table table-bordered table-hover w-100 mx-auto">
+    <thead>
+        <tr class="bg-light text-black align-middle">
+            <th>Дата проишествия</th>
+            <th>Тип проишествия</th>
+            <th>Причина проишествия</th>
+            <th>Шахта, где произошло ЧС</th>
+            <th>Участок, где произошло ЧС</th>
+            <th>Ущерб, руб.</th>
+            <th class="text-center @(ViewBag.CurUser == "Рабочий" ? "d-none" : "")">
+                <a class="btn btn-outline-success ms-2"
+                   asp-controller="Incidents"
+                   asp-action="AddIncident"
+                   title="Добавить...">
+                    <i class="bi bi-plus-square"></i>
+                </a>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var incident in Model)
+        {
+            <tr class="align-middle">
+                <td>@($"{incident.IncDate:dd/MM/yyyy}")</td>
+                <td>@incident.EmergencyType.TypeName</td>
+                <td>@incident.EmergencyCause.CauseName</td>
+                <td>@incident.Plot.Mine.MineName</td>
+                <td>@incident.Plot.Number</td>
+                <td class="px-5">@($"{incident.Damage:n2}")</td>
+                <td class="text-center @(ViewBag.CurUser == "Рабочий" ? "d-none" : "")">
+                    <a class="btn btn-outline-primary ms-2"
+                       asp-controller="Incidents"
+                       asp-action="UpdateById"
+                       asp-route-id="@incident.Id" title="Изменить...">
+                        <i class="bi bi-pencil-square"></i>
+                    </a>
+                    <a class="btn btn-outline-danger ms-2"
+                       asp-controller="Incidents"
+                       asp-action="DeleteById"
+                       asp-route-id="@incident.Id" title="Удалить...">
+                        <i class="bi bi-trash3"></i>
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

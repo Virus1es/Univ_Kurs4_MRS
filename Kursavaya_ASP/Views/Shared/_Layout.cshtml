@@ -1,0 +1,162 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewBag.Title</title>
+
+    <!-- подключение файла-иконки -->
+    <link rel="shortcut icon" href="~/img/icon.jpg" type="image/x-icon">
+
+    <!-- внешнее подключение стилей  -->
+    <link rel="stylesheet" href="/lib/bootstrap/css/bootstrap.min.css">
+
+    <!-- подключаем Bootstrap-иконки -->
+    <link rel="stylesheet" href="~/lib/bootstrap-icons-1.9.1/bootstrap-icons.css">
+
+    <!-- скрипты для Bootstrap -->
+    <script src="/lib/bootstrap/js/bootstrap.bundle.min.js"></script>
+</head>
+<body>
+    <header class ="p-4 bg-primary text-white text-center">
+        <h1>@ViewBag.Header</h1>
+    </header>
+
+    <nav class="navbar navbar-expand-sm bg-dark navbar-dark sticky-top @((ViewBag.CurUser == "" || ViewBag.CurUser == null) ? "d-none" : "")">
+        <div class="ps-5 container-fluid">
+            <a class="navbar-brand" asp-controller="Home" asp-action="Index">
+                <i class="bi bi-house"></i>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#appNavbar-1">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="appNavbar-1">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="Employees" asp-action="Index">
+                            @(ViewBag.CurUser != "Администратор" ? "Наш коллектив" : "Коллективы")
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="MinesAndPlots" asp-action="Index">
+                            Шахты и участки
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="Incidents" asp-action="Index">
+                            Журнал ЧС
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" asp-controller="IncidentIners" asp-action="Index">
+                            Участие в устанении ЧС
+                        </a>
+                    </li>
+
+                    <li class="nav-item @(ViewBag.CurUser != "Администратор" ? "d-none" : "")">
+                        <a class="nav-link" asp-controller="Departments" asp-action="Index">
+                            Отделения ГСС
+                        </a>
+                    </li>
+
+                    <li class="nav-item @(ViewBag.CurUser != "Администратор" ? "d-none" : "")">
+                        <a class="nav-link" asp-controller="Users" asp-action="Index">
+                            Пользователи
+                        </a>
+                    </li>
+                    @* запросы на выборку из базы данных *@
+                    <li class="nav-item dropdown @(ViewBag.CurUser != "Администратор" ? "d-none" : "")">
+                        @* класс active визуально выделяет элемент *@
+                        <a class="nav-link dropdown-toggle" href="#" role="button"
+                           data-bs-toggle="dropdown"
+                           title="Таблицы базы данных">Справочники</a>
+                        <ul class="dropdown-menu dropdown-menu-dark">
+                            <li>
+                                <a class="dropdown-item" asp-controller="References" asp-action="Cities">
+                                    Города
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" asp-controller="References" asp-action="CoalTypes">
+                                    Типы угля
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" asp-controller="References" asp-action="ProductionTypes">
+                                    Типы выроботки
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" asp-controller="References" asp-action="EmergencyCauses">
+                                    Причины ЧС
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" asp-controller="References" asp-action="EmergencyTypes">
+                                    Типы ЧС
+                                </a>
+                            </li>
+                            <li>
+                                <a class="dropdown-item" asp-controller="References" asp-action="Positions">
+                                    Должности
+                                </a>
+                            </li>
+                        </ul> 
+                    </li>
+
+                    @* итоговые запросы к базе данных *@
+                    <li class="nav-item dropdown @(ViewBag.CurUser == "Рабочий" ? "d-none" : "")">
+                        @* класс active визуально выделяет элемент *@
+                        <a class="nav-link dropdown-toggle" href="#" role="button"
+                           data-bs-toggle="dropdown"
+                           title="Отчеты по работе библиотеки">Отчеты</a>
+                        <ul class="dropdown-menu dropdown-menu-dark">
+                            <li><a class="dropdown-item" asp-controller="Reports" asp-action="SimpleQueries">1 часть</a></li>
+                            <li><a class="dropdown-item" asp-controller="Reports" asp-action="DifficultQueries">2 часть</a></li>
+                            <li><a class="dropdown-item" asp-controller="Reports" asp-action="AddQueries">3 часть</a></li>
+                            <li><a class="dropdown-item" asp-controller="Reports" asp-action="ExcelImport">Импрорт отчёта в Excel</a></li>
+                        </ul>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="btn btn-success ms-2"
+                           asp-controller="Home"
+                           asp-action="Enter"
+                           title="Выйти...">
+                            <i class="bi bi-door-open"></i>
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <p class="text-info fw-bold ms-3 my-2">Ваша роль - @ViewBag.CurUser</p>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container mt-5">
+        <div class="row pt-2">
+            @RenderBody()
+        </div>
+    </main>
+
+    <footer class="mt-4 p-3 bg-dark text-white text-center">
+        <p>Разработчик: Якубенко В. В. группа ПИ-21в, Донецк, 2024 г.</p>
+    </footer>
+
+    <script>
+    // Initialize tooltips 
+    let tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+        .concat([].slice.call(document.querySelectorAll('[data-bs-toggle-second="tooltip"]')))
+    let tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl)
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,48 @@
+﻿@{
+    ViewBag.Title = ViewBag.Header = "Список причин ЧС";
+}
+
+<h4 class="text-center">@ViewBag.Header</h4>
+
+
+@* Вывод коллекции сведений о причинах ЧС *@
+<table id="table" class="table table-bordered table-hover w-75 mx-auto">
+    <thead>
+        <tr class="bg-light text-black align-middle">
+            <th class="text-end">Ид</th>
+            <th>Причина ЧС</th>
+            <th class="text-center">
+                <a class="btn btn-outline-success ms-2"
+                   asp-controller="References"
+                   asp-action="AddEmergencyCause"
+                   title="Добавить...">
+                    <i class="bi bi-plus-square"></i>
+                </a>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var cause in Model)
+        {
+            <tr class="align-middle">
+                <td class="text-end">@cause.Id</td>
+                <td class="px-5">@cause.CauseName</td>
+                <td class="text-center">
+                    <a class="btn btn-outline-primary ms-2"
+                       asp-controller="References"
+                       asp-action="UpdateEmergencyCauseById"
+                       asp-route-id="@cause.Id" title="Изменить...">
+                        <i class="bi bi-pencil-square"></i>
+                    </a>
+                    <a class="btn btn-outline-danger ms-2"
+                       asp-controller="References"
+                       asp-action="DeleteEmergencyCauseById"
+                       asp-route-id="@cause.Id" title="Изменить...">
+                        <i class="bi bi-trash3"></i>
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+

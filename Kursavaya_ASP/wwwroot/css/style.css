@@ -1,0 +1,16 @@
+/* заголовок страницы */
+header { 
+    height: 3rem; 
+}
+
+
+/* контейнер страницы */
+main {
+    min-height: calc(100vh - 9rem);
+}
+
+/* подвал страницы */
+footer {
+    height: 6rem;
+}
+

@@ -1,0 +1,36 @@
+﻿@model Kursavaya_ASP.Models.Tables.Main.IncidentIner
+
+<div class="text-center w-50 mx-auto">
+    <h3>@ViewBag.Header</h3>
+
+    <form class="bg-light p-5" method="post" enctype="multipart/form-data"
+          asp-controller="IncidentIners" asp-action="Update">
+
+        @* идентификатор пользователя, не меняем, но используем *@
+        <input asp-for="Id" type="hidden" value="@Model.Id" />
+
+        <div class="mb-3">
+            <label class="form-label" asp-for="IdEmployee">Рабочий, учавствовавший в устранении проишествия</label>
+            <select class="form-select" asp-for="IdEmployee" asp-items="@ViewBag.Employees"></select>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label" asp-for="IdIncident">Случившееся проишествие</label>
+            <select class="form-select" asp-for="IdIncident" asp-items="@ViewBag.Incidents"></select>
+        </div>
+
+        <div class="mt-2">
+            <label asp-for="DaysAmount" class="form-label" style="font-size: 14pt">Дней участия в устранении проишествия</label>
+            <input asp-for="DaysAmount" type="number" class="form-control" min="0" />
+        </div>
+
+
+        <div class="mt-2">
+            <button type="submit" class="btn btn-primary">Сохранить</button>
+            <a class="btn btn-secondary" asp-controller="IncidentIners" asp-action="Index">Отмена</a>
+        </div>
+    </form>
+
+    <p class="text-danger">@ViewBag.ErrMessage</p>
+</div>
+

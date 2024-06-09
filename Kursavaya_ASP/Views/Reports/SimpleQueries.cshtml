@@ -1,0 +1,137 @@
+﻿@{
+    ViewBag.Title = ViewBag.Header = "1 часть отчётов";
+}
+<h3 class="m-3 text-center">@ViewBag.Title</h3>
+
+@* Вывод коллекции сведений о запросе 1 *@
+<h4 class="mt-4 text-center">ЧС случившиеся 11.10.2022</h4>
+<table class="table table-bordered table-hover w-100 mx-auto">
+    <thead>
+        <tr class="bg-light text-black align-middle">
+            <th>Дата проишествия</th>
+            <th>Тип проишествия</th>
+            <th>Причина проишествия</th>
+            <th>Шахта, где случилось проишествие</th>
+            <th>Участок, где случилось проишествие</th>
+            <th>Ущерб, руб.</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in ViewBag.SelectIncidentsByDate)
+        {
+            <tr class="align-middle">
+                <td>@($"{item.IncDate:dd.MM.yyyy}")</td>
+                <td>@item.TypeName</td>
+                <td>@item.CauseName</td>
+                <td>@item.MineName</td>
+                <td>@item.Number</td>
+                <td>@($"{item.Damage:n2}")</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+@* Вывод коллекции сведений о запросе 2 *@
+<h4 class="mt-4 text-center">Работники устраняющие ЧС 11.10.2022</h4>
+<table class="table table-bordered table-hover w-100 mx-auto">
+    <thead>
+        <tr class="bg-light text-black align-middle">
+            <th>ФИО рабочего</th>
+            <th>Дата проишествия</th>
+            <th>Тип проишествия</th>
+            <th>Шахта, где случилось проишествия</th>
+            <th>Участок, где случилось проишествия</th>
+            <th>Дней устанения</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in ViewBag.SelectIncidentInersByDate)
+        {
+            <tr class="align-middle">
+                <td>@item.EmployeeFullname</td>
+                <td>@($"{item.IncDate:dd.MM.yyyy}")</td>
+                <td>@item.TypeName</td>
+                <td>@item.MineName</td>
+                <td>@item.Number</td>
+                <td class="px-5">@item.DaysAmount</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+
+@* Вывод коллекции сведений о запросе 4 *@
+<h4 class="mt-4 text-center">Типы ЧС по которым нет ни одного случая</h4>
+<table class="table table-bordered table-hover w-25 mx-auto">
+    <thead>
+        <tr class="bg-light text-black align-middle">
+            <th>Название типа</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in ViewBag.LeftJoin)
+        {
+            <tr class="align-middle">
+                <td>@item</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+
+@* Вывод коллекции сведений о запросе 4 *@
+<h4 class="mt-4 text-center">Рабочие не участвовавшие в устранениях ЧС</h4>
+<table class="table table-bordered table-hover w-100 mx-auto">
+    <thead>
+        <tr class="bg-light text-black align-middle">
+            <th>Фамилия рабочего</th>
+            <th>Имя рабочего</th>
+            <th>Отчество рабочего</th>
+            <th>Должность</th>
+            <th>Название отеления</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in ViewBag.RightJoin)
+        {
+            <tr class="align-middle">
+                <td>@item.Surname</td>
+                <td>@item.FirstName</td>
+                <td>@item.Patronymic</td>
+                <td>@item.PositionName</td>
+                <td>@item.DepName</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+
+@* Вывод коллекции сведений о запросе 5 *@
+<h4 class="mt-4 text-center">Рабочие, которые не участвовали в устранениях ЧС 11.10.2022</h4>
+<table class="table table-bordered table-hover w-100 mx-auto">
+    <thead>
+        <tr class="bg-light text-black align-middle">
+            <th>Фамилия рабочего</th>
+            <th>Имя рабочего</th>
+            <th>Отчество рабочего</th>
+            <th>Должность</th>
+            <th>Название отеления</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in ViewBag.QueryOnQuery)
+        {
+            <tr class="align-middle">
+                <td>@item.Surname</td>
+                <td>@item.FirstName</td>
+                <td>@item.Patronymic</td>
+                <td>@item.PositionName</td>
+                <td>@item.DepName</td>
+            </tr>
+        }
+    </tbody>
+</table>

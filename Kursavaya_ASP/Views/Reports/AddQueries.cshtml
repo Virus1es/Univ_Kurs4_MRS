@@ -1,0 +1,164 @@
+﻿@{
+    ViewBag.Title = ViewBag.Header = "3 часть отчётов";
+}
+
+<h3 class="m-3 text-center">@ViewBag.Title</h3>
+
+@* Вывод коллекции сведений о запросе 1 *@
+<h4 class="mt-4 text-center">Рабочие учавствовавшие в устранении слабых проишествий (ущерб до 300 000 руб.)</h4>
+<table class="table table-bordered table-hover w-100 mx-auto">
+    <thead>
+        <tr class="bg-light text-black align-middle">
+            <th>Фамилия рабочего</th>
+            <th>Имя рабочего</th>
+            <th>Отчество рабочего</th>
+            <th>Должность</th>
+            <th>Название отеления</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in ViewBag.QueryIn)
+        {
+            <tr class="align-middle">
+                <td>@item.Surname</td>
+                <td>@item.FirstName</td>
+                <td>@item.Patronymic</td>
+                <td>@item.PositionName</td>
+                <td>@item.DepName</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+@* Вывод коллекции сведений о запросе 2 *@
+<h4 class="mt-4 text-center">Рабочие вступившие на службу с 2000 г.</h4>
+<table class="table table-bordered table-hover w-100 mx-auto">
+    <thead>
+        <tr class="bg-light text-black align-middle">
+            <th>Фамилия рабочего</th>
+            <th>Имя рабочего</th>
+            <th>Отчество рабочего</th>
+            <th>Должность</th>
+            <th>Название отеления</th>
+            <th>Год вступления на службу</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in ViewBag.QueryNotIn)
+        {
+            <tr class="align-middle">
+                <td>@item.Surname</td>
+                <td>@item.FirstName</td>
+                <td>@item.Patronymic</td>
+                <td>@item.PositionName</td>
+                <td>@item.DepName</td>
+                <td>@item.YearStart</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+
+@* Вывод коллекции сведений о запросе 3 *@
+<h4 class="mt-4 text-center">Определение сильных (ущерб больше 500 000 руб.) и обычных проишествий</h4>
+<table class="table table-bordered table-hover w-100 mx-auto">
+    <thead>
+        <tr class="bg-light text-black align-middle">
+            <th>Дата проишествия</th>
+            <th>Участок, где случилось проишествие</th>
+            <th>Причина проишествия</th>
+            <th>Тип проишествия</th>
+            <th>Ущерб, руб.</th>
+            <th>Комментарий</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in ViewBag.QueryCase)
+        {
+            <tr class="align-middle">
+                <td>@($"{item.IncDate:dd.MM.yyyy}")</td>
+                <td>@item.Number</td>
+                <td>@item.CauseName</td>
+                <td>@item.TypeName</td>
+                <td>@($"{item.Damage:n2}")</td>
+                <td>@item.Comment</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+
+@* Вывод коллекции сведений о запросе 4 *@
+<h4 class="mt-4 text-center">Рабочие с именем начинающимся на А</h4>
+<table class="table table-bordered table-hover w-100 mx-auto">
+    <thead>
+        <tr class="bg-light text-black align-middle">
+            <th>Фамилия рабочего</th>
+            <th>Имя рабочего</th>
+            <th>Отчество рабочего</th>
+            <th>Должность</th>
+            <th>Название отеления</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in ViewBag.QueryMask)
+        {
+            <tr class="align-middle">
+                <td>@item.Surname</td>
+                <td>@item.FirstName</td>
+                <td>@item.Patronymic</td>
+                <td>@item.PositionName</td>
+                <td>@item.DepName</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+
+@* Вывод коллекции сведений о запросе 5 *@
+<h4 class="mt-4 text-center">Рабочие - бойцы и командиры взвода</h4>
+<table class="table table-bordered table-hover w-75 mx-auto">
+    <thead>
+        <tr class="bg-light text-black align-middle">
+            <th>ФИО рабочего</th>
+            <th>Должность</th>
+            <th>Отделение</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in ViewBag.QueryUnion)
+        {
+            <tr class="align-middle">
+                <td>@item.Fullname</td>
+                <td>@item.PositionName</td>
+                <td>@item.DepName</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+
+@* Вывод коллекции сведений о запросе 6 *@
+<h4 class="mt-4 text-center">Участие отделений в устранениях ЧП и всего</h4>
+<table class="table table-bordered table-hover w-50 mx-auto">
+    <thead>
+        <tr class="bg-light text-black align-middle">
+            <th>Название отделения</th>
+            <th>Количество учатсий в устранениях ЧС</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in ViewBag.QueryAll)
+        {
+            <tr class="align-middle">
+                <td>@(string.IsNullOrEmpty(item.DepName) ? "Всего" : item.DepName)</td>
+                <td>@item.Amount</td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -1,0 +1,41 @@
+﻿@model Kursavaya_ASP.Models.Tables.Main.Department
+
+<div class="text-center w-25 mx-auto">
+    <h3>@ViewBag.Header</h3>
+
+    <form class="bg-light p-5" method="post" enctype="multipart/form-data"
+          asp-controller="Departments" asp-action="Update">
+
+        @* идентификатор пользователя, не меняем, но используем *@
+        <input asp-for="Id" type="hidden" value="@Model.Id" />
+
+
+        <div class="mt-2">
+            <label asp-for="DepName" class="form-label" style="font-size: 14pt">Название</label>
+            <input asp-for="DepName" type="text" class="form-control" />
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label" asp-for="IdCity">Город размещения</label>
+            <select class="form-select" asp-for="IdCity" asp-items="@ViewBag.Cities"></select>
+        </div>
+
+        <div class="mt-2">
+            <label asp-for="Phone" class="form-label" style="font-size: 14pt">Наомер телефона(без +)</label>
+            <input asp-for="Phone" type="number" class="form-control" min="70000000000" max="79999999999" />
+        </div>
+
+        <div class="mt-2">
+            <label asp-for="YearCreation" class="form-label" style="font-size: 14pt">Год ввода в эксплуатацию</label>
+            <input asp-for="YearCreation" type="number" class="form-control" min="1940" max="@(DateTime.Now.Year)" />
+        </div>
+
+        <div class="mt-2">
+            <button type="submit" class="btn btn-primary">Сохранить</button>
+            <a class="btn btn-secondary" asp-controller="Departments" asp-action="Index">Отмена</a>
+        </div>
+    </form>
+
+    <p class="text-danger">@ViewBag.ErrMessage</p>
+</div>
+

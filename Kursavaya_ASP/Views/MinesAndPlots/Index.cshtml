@@ -1,0 +1,125 @@
+﻿@model IEnumerable<Kursavaya_ASP.Models.Tables.Main.Mine>
+@{
+    ViewBag.Title = ViewBag.Header = "Шахты и их участки";
+}
+
+<style>
+    tr[data-href]{
+        cursor: pointer;
+    }
+</style>
+
+<h4 class="text-center">@ViewBag.Header</h4>
+
+<div class="m-3 @(ViewBag.CurUser != "Администратор" ? "d-none" : "")">
+    <h4 class="d-block">Добавить участок:</h4>
+    <a class="btn btn-outline-success w-25 ms-2"
+       asp-controller="MinesAndPlots"
+       asp-action="AddPlot"
+       title="Добавить...">
+        <i class="bi bi-plus-square"></i>
+    </a>
+</div>
+
+
+@* Вывод коллекции сведений о Шахтах *@
+<table id="table" class="table table-bordered table-hover w-100 mx-auto">
+    <thead>
+        <tr class="bg-light text-black align-middle">
+            <th>Название</th>
+            <th>Город</th>
+            <th>Максимальная глубина, м.</th>
+            <th>Площадь выработок, м<sup>2</sup></th>
+            <th class="text-center @(ViewBag.CurUser != "Администратор" ? "d-none" : "")">
+                <a class="btn btn-outline-success ms-2"
+                   asp-controller="MinesAndPlots"
+                   asp-action="AddMine"
+                   title="Добавить...">
+                    <i class="bi bi-plus-square"></i>
+                </a>
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var mine in Model)
+        {
+            <tr class="align-middle" data-href="/MinesAndPlots/Index/@mine.Id">
+                <td>@mine.MineName</td>
+                <td>@mine.City.CityName</td>
+                <td class="px-5">@mine.MaxDepth</td>
+                <td class="px-5">@mine.Area</td>
+                <td class="text-center @(ViewBag.CurUser != "Администратор" ? "d-none" : "")">
+                    <a class="btn btn-outline-primary ms-2"
+                       asp-controller="MinesAndPlots"
+                       asp-action="UpdateMineById"
+                        asp-route-id="@mine.Id" title="Изменить...">
+                        <i class="bi bi-pencil-square"></i>
+                    </a>
+                    <a class="btn btn-outline-danger ms-2"
+                       asp-controller="MinesAndPlots"
+                       asp-action="DeleteMineById"
+                        asp-route-id="@mine.Id" title="Удалить...">
+                        <i class="bi bi-trash3"></i>
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+
+<h4 class="text-center">Участки выбранной шахты:</h4>
+
+@* Вывод коллекции сведений о Участках выбранной шахты *@
+@if (ViewBag.SelPlots != null) {
+    <table id="table" class="table table-bordered table-hover w-100 mx-auto">
+        <thead>
+            <tr class="bg-light text-black align-middle">
+                <th>Номер</th>
+                <th>Длинна участка, м.</th>
+                <th>Год ввода в действие</th>
+                <th>Тип выработки</th>
+                <th>Тип угля</th>
+                <th class="text-center @(ViewBag.CurUser != "Администратор" ? "d-none" : "")"></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var plot in ViewBag.SelPlots)
+            {
+                <tr class="align-middle">
+                    <td>@plot.Number</td>
+                    <td>@plot.LengthPlot</td>
+                    <td class="px-5">@plot.YearStart</td>
+                    <td class="px-5">@plot.ProductionType.TypeName</td>
+                    <td class="px-5">@plot.CoalType.TypeName</td>
+                    <td class="text-center @(ViewBag.CurUser != "Администратор" ? "d-none" : "")">
+                        <a class="btn btn-outline-primary ms-2"
+                           asp-controller="MinesAndPlots"
+                           asp-action="UpdatePlotById"
+                            asp-route-id="@plot.Id" title="Изменить...">
+                            <i class="bi bi-pencil-square"></i>
+                        </a>
+                        <a class="btn btn-outline-danger ms-2"
+                           asp-controller="MinesAndPlots"
+                           asp-action="DeletePlotById"
+                            asp-route-id="@plot.Id" title="Удалить...">
+                            <i class="bi bi-trash3"></i>
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const rows = document.querySelectorAll("tr[data-href]");
+
+        rows.forEach(row => {
+            row.addEventListener("click", () => {
+                window.location.href = row.dataset.href;
+            });
+        });
+    });
+</script> 

@@ -1,0 +1,46 @@
+﻿@model Kursavaya_ASP.Models.Tables.Main.Incident
+
+<div class="text-center w-25 mx-auto">
+    <h3>@ViewBag.Header</h3>
+
+    <form class="bg-light p-5" method="post" enctype="multipart/form-data"
+          asp-controller="Incidents" asp-action="Update">
+
+        @* идентификатор пользователя, не меняем, но используем *@
+        <input asp-for="Id" type="hidden" value="@Model.Id" />
+
+        <div class="mb-3">
+            <label class="form-label" asp-for="IdPlot">Участок, где случилось проишествие</label>
+            <select class="form-select" asp-for="IdPlot" asp-items="@ViewBag.Plots"></select>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label" asp-for="IdEmergencyType">Тип проишествия</label>
+            <select class="form-select" asp-for="IdEmergencyType" asp-items="@ViewBag.Types"></select>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label" asp-for="IdEmergencyCause">Причина проишествия</label>
+            <select class="form-select" asp-for="IdEmergencyCause" asp-items="@ViewBag.Causes"></select>
+        </div>
+
+        <div class="mt-2">
+            <label asp-for="IncDate" class="form-label" style="font-size: 14pt">Дата проишествия</label>
+            <input asp-for="IncDate" type="date" class="form-control" min="1965-01-01" max="@ViewBag.MaxDate" />
+        </div>
+
+        <div class="mt-2">
+            <label asp-for="Damage" class="form-label" style="font-size: 14pt">Ущерб, руб.</label>
+            <input asp-for="Damage" type="number" class="form-control" min="0"/>
+        </div>
+
+
+        <div class="mt-2">
+            <button type="submit" class="btn btn-primary">Сохранить</button>
+            <a class="btn btn-secondary" asp-controller="Incidents" asp-action="Index">Отмена</a>
+        </div>
+    </form>
+
+    <p class="text-danger">@ViewBag.ErrMessage</p>
+</div>
+
